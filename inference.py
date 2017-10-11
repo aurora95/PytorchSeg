@@ -51,6 +51,7 @@ def inference(net, args, image_names, flip=False, return_results=True, save_dir=
 
     net = net(classes)
     net.cuda()
+    net.eval()
     net = torch.nn.DataParallel(net, device_ids=args.gpus)
     net.load_state_dict(torch.load(save_path+'checkpoint.params'))
 
