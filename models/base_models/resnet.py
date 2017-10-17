@@ -14,12 +14,12 @@ class Bottleneck(nn.Module):
     def __init__(self, inplanes, planes, dilation=1, stride=1, downsample=None):
         super(Bottleneck, self).__init__()
         self.conv1 = nn.Conv2d(inplanes, planes, kernel_size=1, bias=False)
-        self.bn1 = nn.BatchNorm2d(planes, momentum=0.99)
+        self.bn1 = nn.BatchNorm2d(planes, momentum=0.01)
         self.conv2 = nn.Conv2d(planes, planes, dilation=dilation, kernel_size=3, stride=stride,
                                padding=dilation, bias=False)
-        self.bn2 = nn.BatchNorm2d(planes, momentum=0.99)
+        self.bn2 = nn.BatchNorm2d(planes, momentum=0.01)
         self.conv3 = nn.Conv2d(planes, planes * 4, kernel_size=1, bias=False)
-        self.bn3 = nn.BatchNorm2d(planes * 4, momentum=0.99)
+        self.bn3 = nn.BatchNorm2d(planes * 4, momentum=0.01)
         self.relu = nn.ReLU(inplace=True)
         self.downsample = downsample
         self.stride = stride
@@ -54,7 +54,7 @@ class ResNetBase(nn.Module):
         super(ResNetBase, self).__init__()
         self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3,
                                bias=False)
-        self.bn1 = nn.BatchNorm2d(64, momentum=0.99)
+        self.bn1 = nn.BatchNorm2d(64, momentum=0.01)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 
@@ -86,7 +86,7 @@ class ResNetBase(nn.Module):
             downsample = nn.Sequential(
                 nn.Conv2d(self.inplanes, planes * block.expansion,
                           kernel_size=1, stride=stride, bias=False),
-                nn.BatchNorm2d(planes * block.expansion, momentum=0.99),
+                nn.BatchNorm2d(planes * block.expansion, momentum=0.01),
             )
 
         layers = []
